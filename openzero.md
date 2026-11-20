@@ -3,7 +3,7 @@ type: project
 title: "OpenZero"
 domain: platform
 status: active
-version: "0.4.0"
+version: "0.5.0"
 runtime: "node 24"
 schedule: "always-on launchd com.zerospend.router + com.zerospend.console (KeepAlive)"
 entrypoints: ["packages/router/src/server.mjs", "apps/console/server.mjs", "cli/openzero.mjs", "install.sh"]

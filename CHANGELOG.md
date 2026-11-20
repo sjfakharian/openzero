@@ -1,18 +1,25 @@
 # Changelog
 
-## [Unreleased]
+## [0.5.0] - 2026-11-20
+
+### Added
+
+- Multi-agent `claude-council` consensus routing with dynamic quorum roster, parallel querying, and synthesizer synthesis.
+- Native `openzero` executable CLI alongside full backward-compatible `zerospend` command.
+- Robust SSE stream completion guards (`[DONE]` detection) preventing premature client termination.
 
 ### Changed
 
-- Rebranded project from ZeroSpend to OpenZero (`openzero`) with full backward compatibility (`openzero` CLI alongside `zerospend`, `~/.openzero` alongside `~/.zerospend`, `OPENZERO_*` alongside `ZEROSPEND_*`).
-- Refreshed logo, marks, console branding, documentation, and repository URLs to `openzero`.
+- Rebranded project from ZeroSpend to OpenZero (`openzero`) with 100% backward compatibility (`openzero` CLI alongside `zerospend`, `~/.openzero` alongside `~/.zerospend`, `OPENZERO_*` alongside `ZEROSPEND_*`).
+- Redesigned visual identity, favicon, and documentation with modern OpenZero Ø mark and styling.
+- Expanded Console operational event capacity to 5,000 records to support comprehensive 14-day token aggregations.
 
 ### Fixed
 
-- `zerospend status`, `dashboard`, `doctor`, `components`, setup output, and the Console now resolve Router/Console ports from `~/.zerospend/config/routing.json` when the `ZEROSPEND_ROUTER_PORT`/`ZEROSPEND_CONSOLE_PORT` environment variables are absent, so a machine installed on non-default ports no longer reports itself as offline.
-- The benchmark LaunchAgent template now uses `Weekday` 0 (Sunday) 04:40, matching the schedule documented in `docs/` and printed by `zerospend automation status`; it previously used `Weekday` 1, which launchd reads as Monday.
-- `zerospend automation status` now reads each installed plist and reports the schedule launchd will actually run, printing `MISMATCH` and exiting non-zero when it disagrees with the advertised schedule.
-- `zerospend automation install` now writes the version-independent Homebrew `opt` path (`/opt/homebrew/opt/<formula>/bin/node`) instead of the version-pinned `Cellar/<formula>/<version>` path, so schedule entries survive Node upgrades.
+- `openzero status`, `dashboard`, `doctor`, `components`, setup output, and the Console now resolve Router/Console ports from `routing.json` when port environment variables are absent, preventing false offline statuses.
+- The benchmark LaunchAgent template now uses `Weekday` 0 (Sunday) 04:40, matching the schedule documented in `docs/` and printed by `openzero automation status`.
+- `openzero automation status` now reads each installed plist and reports the schedule launchd will actually run, printing `MISMATCH` and exiting non-zero when it disagrees with the advertised schedule.
+- `openzero automation install` now writes the version-independent Homebrew `opt` path (`/opt/homebrew/opt/<formula>/bin/node`) instead of the version-pinned `Cellar/<formula>/<version>` path, so schedule entries survive Node upgrades.
 
 ## [0.4.0] - 2026-10-01
 
