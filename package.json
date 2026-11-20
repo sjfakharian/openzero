@@ -1,5 +1,5 @@
 {
-  "name": "zerospend",
+  "name": "openzero",
   "version": "0.4.0",
   "private": true,
   "type": "module",
@@ -7,15 +7,16 @@
     "node": ">=22"
   },
   "bin": {
-    "zerospend": "./cli/zerospend.mjs"
+    "openzero": "./cli/openzero.mjs",
+    "zerospend": "./cli/openzero.mjs"
   },
   "scripts": {
     "start": "node packages/router/src/server.mjs",
     "console": "node apps/console/server.mjs",
-    "demo": "ZEROSPEND_DEMO=1 node apps/console/server.mjs",
+    "demo": "OPENZERO_DEMO=1 ZEROSPEND_DEMO=1 node apps/console/server.mjs",
     "test": "node --test tests/unit/*.test.mjs tests/integration/*.test.mjs",
     "lint": "node scripts/lint.mjs",
-    "typecheck": "node --check packages/router/src/server.mjs && node --check apps/console/server.mjs && node --check cli/zerospend.mjs",
+    "typecheck": "node --check packages/router/src/server.mjs && node --check apps/console/server.mjs && node --check cli/openzero.mjs",
     "build": "node scripts/build.mjs",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
@@ -23,7 +24,7 @@
     "media:generate": "node scripts/generate-launch-media.mjs",
     "media:walkthrough": "node scripts/generate-full-walkthrough.mjs",
     "media:walkthrough:finish": "node scripts/finish-full-walkthrough.mjs",
-    "doctor": "node cli/zerospend.mjs doctor"
+    "doctor": "node cli/openzero.mjs doctor"
   },
   "license": "MIT",
   "devDependencies": {

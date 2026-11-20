@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#9d92ff"/><stop offset="1" stop-color="#37d887"/></linearGradient></defs><path fill="none" stroke="url(#g)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M10 13h25L13 35h25"/><circle cx="38" cy="12" r="4" fill="#37d887"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <linearGradient id="ozg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="50%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+  </defs>
+  <!-- Stylized OpenZero Logo: Ring with diagonal cut through & satellite dot -->
+  <circle cx="24" cy="24" r="16" fill="none" stroke="url(#ozg)" stroke-width="4.5"/>
+  <line x1="12" y1="36" x2="36" y2="12" stroke="url(#ozg)" stroke-width="4.5" stroke-linecap="round"/>
+  <circle cx="37" cy="11" r="3.5" fill="#10b981"/>
+</svg>

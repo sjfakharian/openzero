@@ -2,7 +2,7 @@
 
 Create a custom model:
 
-- Name: `ZeroSpend`
+- Name: `OpenZero`
 - Model ID: `smart-free`
 - Endpoint: `http://127.0.0.1:20129/v1/chat/completions`
 - API key: a dedicated local bearer token

@@ -1,4 +1,4 @@
-# I Built ZeroSpend After My “Free Model” List Kept Going Stale
+# I Built OpenZero After My “Free Model” List Kept Going Stale
 
 ## The problem I hit
 
@@ -14,15 +14,15 @@ Most fallback code treats every candidate as interchangeable. That is useful whe
 
 If a free route fails and the next configured model is paid, a successful fallback is still a policy failure. I did not want a warning after the request. I wanted the paid route excluded before routing began.
 
-That led to ZeroSpend: one local OpenAI-compatible endpoint with task aliases whose candidate chains contain only routes that currently meet the project’s free-evidence rules.
+That led to OpenZero: one local OpenAI-compatible endpoint with task aliases whose candidate chains contain only routes that currently meet the project’s free-evidence rules.
 
 ## The rule I ended up enforcing
 
 The internal rule is written as `UNKNOWN COST = NOT FREE`.
 
-That wording is intentionally conservative. It does not mean ZeroSpend can guarantee future pricing. It means uncertainty does not qualify a route for production. A route also needs availability and production eligibility before it can enter a fallback chain.
+That wording is intentionally conservative. It does not mean OpenZero can guarantee future pricing. It means uncertainty does not qualify a route for production. A route also needs availability and production eligibility before it can enter a fallback chain.
 
-HTTP 429 is treated as temporary capacity pressure. It does not permanently invalidate a model. ZeroSpend can try another distinct candidate, but that candidate must independently pass the same free-route checks. If the chain is exhausted, the request fails with `FREE_CAPACITY_UNAVAILABLE`.
+HTTP 429 is treated as temporary capacity pressure. It does not permanently invalidate a model. OpenZero can try another distinct candidate, but that candidate must independently pass the same free-route checks. If the chain is exhausted, the request fails with `FREE_CAPACITY_UNAVAILABLE`.
 
 ## What broke while I was building it
 
@@ -64,7 +64,7 @@ The same tests found empty-capacity behavior that used to be too brittle. An ali
 
 These details are less exciting than model ranking, but they determine whether the project works outside its original laptop.
 
-## What ZeroSpend does now
+## What OpenZero does now
 
 Requests are classified with deterministic heuristics into code, SQL, reasoning, tools, structured output, long context, fast, or general aliases. There is no second LLM call just to choose a route.
 
@@ -74,7 +74,7 @@ The router and console bind to loopback by default. The event store keeps operat
 
 ## What it deliberately does not guarantee
 
-ZeroSpend cannot create free capacity. It cannot prevent a provider from changing terms, remove rate limits, or promise that evidence observed at one timestamp remains true forever.
+OpenZero cannot create free capacity. It cannot prevent a provider from changing terms, remove rate limits, or promise that evidence observed at one timestamp remains true forever.
 
 “Verified free” means the current evidence met the implemented rule at a recorded time. Some integrations require provider credentials and network access. OpenCode Free through 9Router and OmniRoute remain advanced or experimental paths. macOS is the primary supported platform; Linux service installation is experimental.
 
@@ -88,6 +88,6 @@ I am most interested in three questions:
 2. What provider evidence is strong enough to automate free-route eligibility?
 3. Which metadata makes a routing decision auditable without retaining request content?
 
-ZeroSpend is MIT-licensed: https://github.com/sjfakharian/zerospend
+OpenZero is MIT-licensed: https://github.com/sjfakharian/openzero
 
 The public demo uses synthetic routes and a synthetic 429. It does not report live provider capacity or claim endorsement from any provider.

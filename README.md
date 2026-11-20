@@ -1,24 +1,22 @@
-<p align="center"><img src="docs/public/logo.svg" width="88" alt="ZeroSpend logo"></p>
+<p align="center"><img src="docs/public/logo.svg" width="88" alt="OpenZero logo"></p>
 
-# ZeroSpend
+# OpenZero
 
-**ZeroSpend discovers, verifies, ranks, and routes LLM requests only across currently verified-free capacity—with no silent paid fallback.**
+**OpenZero discovers, verifies, ranks, and routes LLM requests only across currently verified-free capacity—with no silent paid fallback.**
 
-[![CI](https://github.com/sjfakharian/zerospend/actions/workflows/ci.yml/badge.svg)](https://github.com/sjfakharian/zerospend/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE) [![Node 22+](https://img.shields.io/badge/node-22%2B-5FA04E)](package.json) [![macOS](https://img.shields.io/badge/platform-macOS-lightgrey)](docs/installation/macos.md) [![Release](https://img.shields.io/github/v/release/sjfakharian/zerospend)](https://github.com/sjfakharian/zerospend/releases)
+[![CI](https://github.com/sjfakharian/openzero/actions/workflows/ci.yml/badge.svg)](https://github.com/sjfakharian/openzero/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE) [![Node 22+](https://img.shields.io/badge/node-22%2B-5FA04E)](package.json) [![macOS](https://img.shields.io/badge/platform-macOS-lightgrey)](docs/installation/macos.md) [![Release](https://img.shields.io/github/v/release/sjfakharian/openzero)](https://github.com/sjfakharian/openzero/releases)
 
-[![ZeroSpend Console interactive walkthrough](docs/screenshots/zerospend-demo.gif)](docs/dashboard.md)
+[![OpenZero Console interactive walkthrough](docs/screenshots/zerospend-demo.gif)](docs/dashboard.md)
 
 *Interactive Console walkthrough showing real-time routing, model verification, daily token usage analytics, and automated benchmarks.*
-
-[Watch the full ZeroSpend walkthrough](https://youtu.be/OfNsOJGxjEQ): from clean installation to the first verified-free routed request.
 
 **Discover → Verify → Benchmark → Route → Observe**
 
 `UNKNOWN COST = NOT FREE`
 
-ZeroSpend exposes one local OpenAI-compatible endpoint for Hermes, TypingMind, and other compatible clients. It classifies requests deterministically, admits only routes with current zero-cost evidence, and records operational metadata without storing prompt content.
+OpenZero exposes one local OpenAI-compatible endpoint for Hermes, TypingMind, Cursor, Claude Desktop, and other compatible clients. It classifies requests deterministically, admits only routes with current zero-cost evidence, and records operational metadata without storing prompt content.
 
-## Why ZeroSpend?
+## Why OpenZero?
 
 - **Verified zero-cost only:** unknown cost is rejected; paid fallback is impossible by policy.
 - **Task-aware:** code, SQL, reasoning, general, tools, fast, long-context, and structured-output routes.
@@ -31,10 +29,13 @@ ZeroSpend exposes one local OpenAI-compatible endpoint for Hermes, TypingMind, a
 
 ```mermaid
 flowchart LR
-  H[Hermes / OpenAI-compatible client] --> R[ZeroSpend :20129]
+  H[Hermes / Cursor / Claude Desktop] --> R[OpenZero :20129]
   R --> P[Task classification<br/>verified-free policy<br/>ranking and fallback]
   P --> OR[OpenRouter]
   P --> NV[NVIDIA NIM]
+  P --> GQ[Groq LPU]
+  P --> MS[Mistral AI]
+  P --> SF[SiliconFlow]
   P --> TH[TokenHarbor]
   P --> AX[APINex]
   P --> N[9Router]
@@ -42,26 +43,26 @@ flowchart LR
   R -. metadata only .-> C[Console :20131]
 ```
 
-ZeroSpend owns discovery, cost verification, policy, task ranking, fallback, and observability. 9Router is an optional transport/provider gateway for OpenCode Free; direct OpenRouter, NVIDIA, TokenHarbor, and APINex routes do not require it. All services bind to `127.0.0.1` by default.
+OpenZero owns discovery, cost verification, policy, task ranking, fallback, and observability. All services bind to `127.0.0.1` by default.
 
 ## Quick start
 
 ```bash
-git clone https://github.com/sjfakharian/zerospend.git
-cd zerospend
+git clone https://github.com/sjfakharian/openzero.git
+cd openzero
 ./install.sh
-zerospend setup
-zerospend doctor
+openzero setup
+openzero doctor
 npm run console
 ```
 
-Open `http://127.0.0.1:20131`, add one provider in Providers, test it, and run discovery. 9Router, OmniRoute, and OpenCode are not required for first success.
+Open `http://127.0.0.1:20131` (or your configured console port), add providers in Providers, test them, and run discovery.
 
-If either default port is occupied, set `ZEROSPEND_ROUTER_PORT` and `ZEROSPEND_CONSOLE_PORT` consistently for installation, services, diagnostics, and clients. ZeroSpend reports the effective endpoints and never terminates an existing listener automatically.
+If either default port is occupied, set `OPENZERO_ROUTER_PORT` (or `ZEROSPEND_ROUTER_PORT`) and `OPENZERO_CONSOLE_PORT` consistently. OpenZero reports the effective endpoints and never terminates an existing listener automatically.
 
-Terminal-first users can run `zerospend provider add`, followed by `zerospend provider test openrouter` and `zerospend providers`. API keys are collected through hidden terminal input, never command arguments.
+Terminal-first users can run `openzero provider add`, followed by `openzero provider test openrouter` and `openzero providers`. API keys are collected through hidden terminal input, never command arguments.
 
-Run `zerospend components` for a credential-free inventory of Router, Console, Hermes, 9Router, and optional OmniRoute. Hermes is the recommended client; 9Router is recommended only when enabling OpenCode Free no-auth.
+Run `openzero components` for a credential-free inventory of Router, Console, Hermes, 9Router, and optional OmniRoute. Hermes is the recommended client; 9Router is recommended only when enabling OpenCode Free no-auth.
 
 OpenCode Free candidates are discovered dynamically from provider-specific 9Router metadata and bounded probes. No changing external model ID is hardcoded as authoritative, and OpenCode Zen is never a fallback.
 
@@ -78,22 +79,24 @@ The polished local console includes Overview, Live Routing, Models, Routing, Ben
 
 The router inspects request structure and user text using deterministic heuristics. Tool definitions take priority, then structured output, long context, SQL, code, reasoning, fast requests, and finally `free-general`. It never makes a second LLM call merely to classify a prompt.
 
-Each alias is an ordered verified-free fallback chain. A route is attempted only when current evidence says its monetary usage cost is zero. If every route fails, ZeroSpend returns `FREE_CAPACITY_UNAVAILABLE`.
+Each alias is an ordered verified-free fallback chain. A route is attempted only when current evidence says its monetary usage cost is zero. If every route fails, OpenZero returns `FREE_CAPACITY_UNAVAILABLE`.
 
 ## Supported providers
 
 | Provider | Role | Eligibility |
 |---|---|---|
-| OpenRouter | Production | Explicit `:free` model plus zero prompt/completion pricing |
-| OpenCode | Production when verified | Current advertised-free evidence plus live availability |
+| Groq | Direct production LPU | Verified zero-cost models (`gpt-oss-120b`, `gpt-oss-20b`, `qwen3.8-27b`) |
 | NVIDIA API Catalog | Direct production | Current `Free Endpoint` evidence, authenticated catalog presence, bounded probe |
+| OpenRouter | Production | Explicit `:free` model plus zero prompt/completion pricing |
+| Mistral AI | Direct production | Codestral and Ministral verified free tier models |
+| SiliconFlow | Direct production | DeepSeek V4.1 Flash, GLM, Qwen verified free routes |
 | TokenHarbor | Direct production when verified | Explicit `:free` ID, zero input/output catalog pricing, bounded probe |
 | APINex | Direct production when verified | Explicit free marker, zero input/output catalog pricing, bounded probe |
-| OmniRoute | Optional discovery/capacity | Only independently verified, useful, non-duplicate free routes |
+| OpenCode | Production when verified | Current advertised-free evidence plus live availability |
 
 ## Integrations
 
-ZeroSpend exposes both standard OpenAI-compatible (`/v1/chat/completions`) and native Anthropic Messages (`/v1/messages`) API endpoints. You can drop it into any tool, IDE, or desktop assistant:
+OpenZero exposes both standard OpenAI-compatible (`/v1/chat/completions`) and native Anthropic Messages (`/v1/messages`) API endpoints. You can drop it into any tool, IDE, or desktop assistant:
 
 | Client | Base URL | Model | Guide |
 |---|---|---|---|
@@ -109,7 +112,7 @@ ZeroSpend exposes both standard OpenAI-compatible (`/v1/chat/completions`) and n
 ```bash
 # Test with curl right away
 curl http://127.0.0.1:20129/v1/chat/completions \
-  -H "Authorization: Bearer $(cat ~/.zerospend/secrets/local.token)" \
+  -H "Authorization: Bearer $(cat ~/.openzero/secrets/local.token)" \
   -H "Content-Type: application/json" \
   -d '{"model":"smart-free","messages":[{"role":"user","content":"Hello world!"}]}'
 ```
@@ -117,7 +120,7 @@ curl http://127.0.0.1:20129/v1/chat/completions \
 
 ## Free-only guarantee
 
-`UNKNOWN COST = NOT FREE`. ZeroSpend does not buy credits, enable billing, or silently select a paid model. Promotional account credit is not zero-cost evidence. The Safety view exposes every route’s evidence and rejection reason.
+`UNKNOWN COST = NOT FREE`. OpenZero does not buy credits, enable billing, or silently select a paid model. Promotional account credit is not zero-cost evidence. The Safety view exposes every route’s evidence and rejection reason.
 
 ## Security and privacy
 
@@ -129,7 +132,7 @@ Start with the [Quickstart](docs/quickstart.md), [Architecture](docs/architectur
 
 ## Honest limitations
 
-Free tiers and provider terms change. Rate limits and capacity are outside ZeroSpend’s control. Benchmarks consume quota. macOS is the primary supported platform; Linux service installation is experimental. Users remain responsible for provider terms. ZeroSpend is not intended to bypass restrictions.
+Free tiers and provider terms change. Rate limits and capacity are outside OpenZero’s control. Benchmarks consume quota. macOS is the primary supported platform; Linux service installation is experimental. Users remain responsible for provider terms. OpenZero is not intended to bypass restrictions.
 
 Discovery requires provider credentials and network access. OpenCode eligibility depends on machine-readable official free-offer evidence; ambiguous offers stay excluded. NVIDIA, TokenHarbor, and APINex catalog evidence may change independently of model availability. APINex advertises both free and paid models; paid, promotional-credit-only, or ambiguously priced entries remain ineligible. TokenHarbor permanent free routes require an account opt-in and may retain prompts and responses under the provider's current terms. Automatic promotion is conservative, but synthetic scores are not a substitute for evaluating your own workload.
 
@@ -139,8 +142,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) and [ROADMAP.md](ROADMAP.md). Security re
 
 ## Acknowledgements
 
-ZeroSpend orchestrates external systems; it does not claim authorship of Hermes Agent, 9Router, OmniRoute, OpenRouter, NVIDIA NIM, TokenHarbor, APINex, OpenCode, or TypingMind. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+OpenZero orchestrates external systems; it does not claim authorship of Hermes Agent, 9Router, OmniRoute, OpenRouter, NVIDIA NIM, TokenHarbor, APINex, OpenCode, or TypingMind. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ## License
 
-Original ZeroSpend source is available under the [MIT License](LICENSE).
+Original OpenZero source is available under the [MIT License](LICENSE).

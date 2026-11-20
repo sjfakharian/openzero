@@ -1,12 +1,12 @@
 # Claude Desktop (Custom Inference Gateway)
 
-Connect **Claude Desktop** directly to ZeroSpend so you can use verified-free LLM models right inside Claude's desktop interface.
+Connect **Claude Desktop** directly to OpenZero so you can use verified-free LLM models right inside Claude's desktop interface.
 
 ---
 
 ## Overview
 
-Claude Desktop includes support for third-party custom inference gateways using the native Anthropic Messages API. ZeroSpend provides built-in compatibility with:
+Claude Desktop includes support for third-party custom inference gateways using the native Anthropic Messages API. OpenZero provides built-in compatibility with:
 - **Anthropic Messages protocol** (`/v1/messages` and `/v1/messages/count_tokens`)
 - **Automated model discovery** (`/v1/models` formatted with Anthropic family tiers: `sonnet`, `opus`, `haiku`)
 - **Real-time SSE token streaming** (`content_block_delta`, `message_delta`, etc.)
@@ -16,14 +16,14 @@ Claude Desktop includes support for third-party custom inference gateways using 
 
 ## Configuration & Credentials
 
-1. Retrieve your ZeroSpend local authorization token:
+1. Retrieve your OpenZero local authorization token:
    ```bash
-   cat ~/.zerospend/secrets/local.token
+   cat ~/.openzero/secrets/local.token
    ```
 
-2. Confirm your router port (default is `20129` or custom `20229` if specified via `ZEROSPEND_ROUTER_PORT`):
+2. Confirm your router port (default is `20129` or custom `20229` if specified via `OPENZERO_ROUTER_PORT`):
    ```bash
-   zerospend doctor
+   openzero doctor
    ```
 
 ---
@@ -39,7 +39,7 @@ Claude Desktop includes support for third-party custom inference gateways using 
      ```
      *(Use `http://127.0.0.1:20229/v1` if using port 20229)*
    - **Authentication:** `x-api-key` (or `Bearer Token`)
-   - **API Key:** Paste your token from `~/.zerospend/secrets/local.token`
+   - **API Key:** Paste your token from `~/.openzero/secrets/local.token`
 4. Click **Test Connection** / **Apply Changes**.
 5. Claude Desktop will discover available models and verify end-to-end inference.
 
@@ -47,9 +47,9 @@ Claude Desktop includes support for third-party custom inference gateways using 
 
 ## Available Models & Smart Routing
 
-ZeroSpend exposes Claude-compatible family tiers that route dynamically to your verified-free backends:
+OpenZero exposes Claude-compatible family tiers that route dynamically to your verified-free backends:
 
-| Model ID | Family Tier | ZeroSpend Routing Behavior |
+| Model ID | Family Tier | OpenZero Routing Behavior |
 |---|---|---|
 | `claude-3-5-sonnet` *(Default)* | `sonnet` | **Smart Free**: Deterministically classifies prompt into code, reasoning, SQL, or general free models. |
 | `claude-3-7-sonnet` | `sonnet` | **Smart Free**: Routes to top-ranked verified-free capacity. |
@@ -65,7 +65,7 @@ ZeroSpend exposes Claude-compatible family tiers that route dynamically to your 
 You can also test the Anthropic endpoint directly using `curl`:
 
 ```bash
-TOKEN=$(cat ~/.zerospend/secrets/local.token)
+TOKEN=$(cat ~/.openzero/secrets/local.token)
 
 # Model discovery test
 curl -s -H "x-api-key: $TOKEN" http://127.0.0.1:20129/v1/models

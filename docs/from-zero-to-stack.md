@@ -6,38 +6,38 @@ This guide builds a local verified-free routing stack on a clean laptop. It uses
 
 Use macOS with Git, Node.js 22+, npm, Python 3, and optionally `uv`. Install `ripgrep` and `ffmpeg` when agent workflows need them. Avoid `sudo npm`; use a user-owned prefix such as `$HOME/.local`. If Homebrew reports permissions, repair only the named path—never recursively change all of `/usr/local`.
 
-## Install ZeroSpend
+## Install OpenZero
 
 ```bash
-git clone https://github.com/sjfakharian/zerospend.git
-cd zerospend
+git clone https://github.com/sjfakharian/openzero.git
+cd openzero
 ./install.sh
-zerospend setup
+openzero setup
 npm run console
 ```
 
-This creates `~/.zerospend/{config,secrets,data,logs,state,backups,runtime}` and a local client token without printing it.
+This creates `~/.openzero/{config,secrets,data,logs,state,backups,runtime}` and a local client token without printing it.
 
-Open `http://127.0.0.1:20131`, choose Providers, and add one OpenRouter, NVIDIA, TokenHarbor, or APINex credential. Test the connection, run discovery, then run `zerospend doctor` and start the router. Keys are write-only and never returned to the browser after saving.
+Open `http://127.0.0.1:20131`, choose Providers, and add one OpenRouter, NVIDIA, TokenHarbor, or APINex credential. Test the connection, run discovery, then run `openzero doctor` and start the router. Keys are write-only and never returned to the browser after saving.
 
 The terminal provides the same shared provider manager:
 
 ```bash
-zerospend provider add
-zerospend provider test openrouter
-zerospend provider status
-zerospend provider remove openrouter
+openzero provider add
+openzero provider test openrouter
+openzero provider status
+openzero provider remove openrouter
 ```
 
 Bearer credentials use hidden input and are never accepted as command arguments. `opencode-free` is a separate no-auth provider exposed through optional 9Router; it never creates `opencode.token` and does not substitute OpenCode Zen.
 
-`zerospend setup` detects macOS architecture, Node/npm, the user npm prefix, Hermes, 9Router, Router, Console, and optional OmniRoute. `zerospend components` repeats the component inventory without exposing configuration or credentials.
+`openzero setup` detects macOS architecture, Node/npm, the user npm prefix, Hermes, 9Router, Router, Console, and optional OmniRoute. `openzero components` repeats the component inventory without exposing configuration or credentials.
 
 Hermes is the recommended client, while any OpenAI-compatible client remains supported. The current official Hermes installer is shown for confirmation but is never executed silently. Prefer the official packaged macOS Desktop installer; source compilation is advanced.
 
-9Router is recommended only for OpenCode Free no-auth. Direct OpenRouter, NVIDIA, TokenHarbor, and APINex routes do not depend on it. Current official 9Router documentation uses `npm install -g 9router`; persistent/background mode is `9router --tray --host 127.0.0.1 --port 20128`. `--no-browser` only suppresses browser launch and is not background mode. ZeroSpend first checks whether the active npm prefix is user-writable and never recommends `sudo npm`. Any user LaunchAgent must use the absolute executable path, explicit loopback host, explicit port, user-owned logs, and no secrets.
+9Router is recommended only for OpenCode Free no-auth. Direct OpenRouter, NVIDIA, TokenHarbor, and APINex routes do not depend on it. Current official 9Router documentation uses `npm install -g 9router`; persistent/background mode is `9router --tray --host 127.0.0.1 --port 20128`. `--no-browser` only suppresses browser launch and is not background mode. OpenZero first checks whether the active npm prefix is user-writable and never recommends `sudo npm`. Any user LaunchAgent must use the absolute executable path, explicit loopback host, explicit port, user-owned logs, and no secrets.
 
-OpenCode Free model membership is dynamic. Run `zerospend discover` and `zerospend models` to inspect the current timestamped, bounded-probe-verified inventory. ZeroSpend does not designate a permanent recommended test model. OpenCode Zen is a separate path and is never substituted as a free fallback.
+OpenCode Free model membership is dynamic. Run `openzero discover` and `openzero models` to inspect the current timestamped, bounded-probe-verified inventory. OpenZero does not designate a permanent recommended test model. OpenCode Zen is a separate path and is never substituted as a free fallback.
 
 OpenRouter documents API-key creation at [OpenRouter API authentication](https://openrouter.ai/docs/api/reference/authentication). You need only one working provider for first success.
 
@@ -47,18 +47,18 @@ OpenRouter documents API-key creation at [OpenRouter API authentication](https:/
 read -s "provider_key?Provider key: "
 printf '\n'
 umask 077
-printf '%s' "$provider_key" > "$HOME/.zerospend/secrets/openrouter.token"
+printf '%s' "$provider_key" > "$HOME/.openzero/secrets/openrouter.token"
 unset provider_key
-chmod 600 "$HOME/.zerospend/secrets/openrouter.token"
+chmod 600 "$HOME/.openzero/secrets/openrouter.token"
 ```
 
 Never paste keys into issues. Repeat with the documented filename for each enabled provider.
 
 ## Optional external components
 
-ZeroSpend routes directly to OpenRouter, NVIDIA, TokenHarbor, and APINex by default. 9Router is an optional advanced gateway and OmniRoute is optional discovery/capacity infrastructure; neither is required. ZeroSpend does not vendor them.
+OpenZero routes directly to OpenRouter, NVIDIA, TokenHarbor, and APINex by default. 9Router is an optional advanced gateway and OmniRoute is optional discovery/capacity infrastructure; neither is required. OpenZero does not vendor them.
 
-OpenRouter routes require explicit `:free` IDs and zero input/output prices. TokenHarbor uses the same fail-closed shape: explicit `:free` plus zero catalog pricing, followed by a bounded probe; paid base IDs and `th-orchestra` are excluded. OpenCode is experimental/advanced: its official flow uses `/connect` with integration-specific API key, OAuth, or environment methods, so ZeroSpend does not invent a generic credential source. NVIDIA needs the current `Free Endpoint` label, authenticated catalog membership, and a bounded chat probe.
+OpenRouter routes require explicit `:free` IDs and zero input/output prices. TokenHarbor uses the same fail-closed shape: explicit `:free` plus zero catalog pricing, followed by a bounded probe; paid base IDs and `th-orchestra` are excluded. OpenCode is experimental/advanced: its official flow uses `/connect` with integration-specific API key, OAuth, or environment methods, so OpenZero does not invent a generic credential source. NVIDIA needs the current `Free Endpoint` label, authenticated catalog membership, and a bounded chat probe.
 
 ## Routing, discovery, and benchmarking
 
@@ -79,7 +79,7 @@ For TypingMind use model `smart-free`, endpoint `http://127.0.0.1:20129/v1/chat/
 
 ## Tools, MCP, and observability
 
-Tool definitions receive routing priority. ZeroSpend records tool-call outcomes but never arguments, results, prompts, SQL, files, or MCP payloads. The console runs at `http://127.0.0.1:20131`; `npm run demo` requires no credentials.
+Tool definitions receive routing priority. OpenZero records tool-call outcomes but never arguments, results, prompts, SQL, files, or MCP payloads. The console runs at `http://127.0.0.1:20131`; `npm run demo` requires no credentials.
 
 ## Troubleshooting
 
@@ -94,8 +94,8 @@ Tool definitions receive routing priority. ZeroSpend records tool-call outcomes 
 ## Final health check
 
 ```bash
-zerospend doctor
-zerospend status
+openzero doctor
+openzero status
 curl -fsS http://127.0.0.1:20129/health
 curl -fsS http://127.0.0.1:20131/health
 ```

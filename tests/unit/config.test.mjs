@@ -25,3 +25,18 @@ test('defaults returns expected configuration', () => {
     }
   });
 });
+
+test('resolveEndpoints prefers environment, then routing config, then defaults', async () => {
+  const { resolveEndpoints, PORT_FALLBACKS } = await import('../../packages/config/src/index.mjs');
+
+  assert.deepEqual(resolveEndpoints({ config: { port: 20229, console_port: 20231 }, env: {} }), {
+    routerPort: 20229,
+    consolePort: 20231
+  });
+  assert.deepEqual(resolveEndpoints({ config: { port: 20229, console_port: 20231 }, env: { ZEROSPEND_ROUTER_PORT: '23129' } }), {
+    routerPort: 23129,
+    consolePort: 20231
+  });
+  assert.deepEqual(resolveEndpoints({ config: {}, env: {} }), PORT_FALLBACKS);
+  assert.deepEqual(resolveEndpoints({ config: { port: 'not-a-port', console_port: -1 }, env: { ZEROSPEND_CONSOLE_PORT: '0' } }), PORT_FALLBACKS);
+});

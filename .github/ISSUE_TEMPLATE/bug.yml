@@ -1,5 +1,5 @@
 name: Bug report
-description: Report a reproducible ZeroSpend defect
+description: Report a reproducible OpenZero defect
 body:
   - type: textarea
     attributes:
@@ -9,7 +9,7 @@ body:
       required: true
   - type: input
     attributes:
-      label: ZeroSpend version
+      label: OpenZero version
     validations:
       required: true
   - type: textarea

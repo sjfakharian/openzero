@@ -1,4 +1,4 @@
-# ZeroSpend from zero to first routed request — final narration
+# OpenZero from zero to first routed request — final narration
 
 Voice direction: calm, neutral, technical, moderate pace. Generated locally with Piper en_GB-alba-medium. All provider/model/activity data and failures are synthetic demo data.
 
@@ -12,13 +12,13 @@ The route returns HTTP four twenty-nine. That means temporary capacity pressure,
 
 ## 00:16–00:25 — HOOK
 
-ZeroSpend blocks the paid branch, tries another verified-free candidate, and completes the request without silent spend.
+OpenZero blocks the paid branch, tries another verified-free candidate, and completes the request without silent spend.
 
-## 00:25–00:34 — WHAT IS ZEROSPEND?
+## 00:25–00:34 — WHAT IS OPENZERO?
 
-ZeroSpend is a local, OpenAI-compatible routing layer for workloads that must remain on currently verified-free routes.
+OpenZero is a local, OpenAI-compatible routing layer for workloads that must remain on currently verified-free routes.
 
-## 00:34–00:43 — WHAT IS ZEROSPEND?
+## 00:34–00:43 — WHAT IS OPENZERO?
 
 Its central rule is simple: unknown cost is not free. When evidence is ambiguous, the route is ineligible.
 
@@ -28,11 +28,11 @@ We will begin from a clean temporary home, so the recording contains no personal
 
 ## 00:53–01:03 — CLEAN INSTALL
 
-ZeroSpend currently requires macOS, Node.js twenty-two or later, npm, and Git for this source installation.
+OpenZero currently requires macOS, Node.js twenty-two or later, npm, and Git for this source installation.
 
 ## 01:03–01:13 — CLEAN INSTALL
 
-Clone the repository, enter the project directory, and point HOME and ZEROSPEND_HOME at an isolated temporary location.
+Clone the repository, enter the project directory, and point HOME and OPENZERO_HOME at an isolated temporary location.
 
 ## 01:13–01:23 — CLEAN INSTALL
 
@@ -68,11 +68,11 @@ OpenRouter is a direct OpenAI-compatible provider. Its free evidence requires ex
 
 ## 02:38–02:49 — PROVIDER SETUP
 
-NVIDIA NIM is also direct. A route needs current official Free Endpoint evidence before ZeroSpend can admit it.
+NVIDIA NIM is also direct. A route needs current official Free Endpoint evidence before OpenZero can admit it.
 
 ## 02:49–03:00 — PROVIDER SETUP
 
-OpenCode Free follows a different path: ZeroSpend calls local 9Router, which then executes the OpenCode Free request.
+OpenCode Free follows a different path: OpenZero calls local 9Router, which then executes the OpenCode Free request.
 
 ## 03:00–03:13 — PROVIDER SETUP
 
@@ -88,7 +88,7 @@ A model appearing in a provider catalog is only the first gate. Listing alone sa
 
 ## 03:36–03:46 — DISCOVERY
 
-Next, ZeroSpend checks provider-specific cost evidence. Explicit zero cost may proceed; unknown or ambiguous cost is rejected.
+Next, OpenZero checks provider-specific cost evidence. Explicit zero cost may proceed; unknown or ambiguous cost is rejected.
 
 ## 03:46–03:57 — DISCOVERY
 
@@ -100,7 +100,7 @@ A small bounded probe then checks current execution availability without creatin
 
 ## 04:08–04:19 — DISCOVERY
 
-Only after those gates does ZeroSpend create a timestamped production-eligibility decision for that specific route.
+Only after those gates does OpenZero create a timestamped production-eligibility decision for that specific route.
 
 ## 04:19–04:30 — DISCOVERY
 
@@ -144,7 +144,7 @@ For this synthetic scenario, candidate A returns HTTP four twenty-nine after the
 
 ## 06:00–06:10 — 429 FALLBACK
 
-ZeroSpend records temporary capacity pressure. It does not erase the model evidence or mark the identifier permanently unsupported.
+OpenZero records temporary capacity pressure. It does not erase the model evidence or mark the identifier permanently unsupported.
 
 ## 06:10–06:20 — 429 FALLBACK
 
@@ -196,11 +196,11 @@ Overview brings the same evidence together so an operator can audit why a route 
 
 ## 08:31–08:43 — ARCHITECTURE
 
-Here is the complete path again. A compatible client sends one request to ZeroSpend on the local endpoint.
+Here is the complete path again. A compatible client sends one request to OpenZero on the local endpoint.
 
 ## 08:43–08:56 — ARCHITECTURE
 
-ZeroSpend owns classification, evidence policy, ordering, and metadata. Execution is direct, or passes through 9Router for OpenCode Free.
+OpenZero owns classification, evidence policy, ordering, and metadata. Execution is direct, or passes through 9Router for OpenCode Free.
 
 ## 08:56–09:10 — CLIENT INTEGRATION
 
@@ -212,7 +212,7 @@ Hermes configuration syntax can change, so verify its current documentation. Oth
 
 ## 09:24–09:35 — NO CAPACITY
 
-Finally, suppose every currently verified-free candidate is unavailable. ZeroSpend does not attempt a paid route.
+Finally, suppose every currently verified-free candidate is unavailable. OpenZero does not attempt a paid route.
 
 ## 09:35–09:46 — NO CAPACITY
 
@@ -220,7 +220,7 @@ It returns HTTP five hundred and three with FREE_CAPACITY_UNAVAILABLE, zero paid
 
 ## 09:46–09:58 — LIMITATIONS
 
-ZeroSpend cannot create free capacity, remove rate limits, or guarantee that provider pricing will remain unchanged.
+OpenZero cannot create free capacity, remove rate limits, or guarantee that provider pricing will remain unchanged.
 
 ## 09:58–10:10 — LIMITATIONS
 
@@ -236,4 +236,4 @@ To explore the project without credentials, clone the repository, enter the dire
 
 ## 10:34–10:47 — CTA
 
-The source, setup guide, and deterministic demo are available at github dot com slash sjfakharian slash zerospend.
+The source, setup guide, and deterministic demo are available at github dot com slash sjfakharian slash openzero.

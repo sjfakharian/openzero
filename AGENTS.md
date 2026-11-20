@@ -1,6 +1,6 @@
 # Contributor Agent Guide
 
-ZeroSpend is a metadata-only, strict-free LLM router. Keep provider adapters isolated, deterministic routing testable, and all network services bound to loopback by default.
+OpenZero is a metadata-only, strict-free LLM router. Keep provider adapters isolated, deterministic routing testable, and all network services bound to loopback by default.
 
 Before submitting changes, run `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, and `npm run docs:build`.
 

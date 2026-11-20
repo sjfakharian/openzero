@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Rebranded project from ZeroSpend to OpenZero (`openzero`) with full backward compatibility (`openzero` CLI alongside `zerospend`, `~/.openzero` alongside `~/.zerospend`, `OPENZERO_*` alongside `ZEROSPEND_*`).
+- Refreshed logo, marks, console branding, documentation, and repository URLs to `openzero`.
+
+### Fixed
+
+- `zerospend status`, `dashboard`, `doctor`, `components`, setup output, and the Console now resolve Router/Console ports from `~/.zerospend/config/routing.json` when the `ZEROSPEND_ROUTER_PORT`/`ZEROSPEND_CONSOLE_PORT` environment variables are absent, so a machine installed on non-default ports no longer reports itself as offline.
+- The benchmark LaunchAgent template now uses `Weekday` 0 (Sunday) 04:40, matching the schedule documented in `docs/` and printed by `zerospend automation status`; it previously used `Weekday` 1, which launchd reads as Monday.
+- `zerospend automation status` now reads each installed plist and reports the schedule launchd will actually run, printing `MISMATCH` and exiting non-zero when it disagrees with the advertised schedule.
+- `zerospend automation install` now writes the version-independent Homebrew `opt` path (`/opt/homebrew/opt/<formula>/bin/node`) instead of the version-pinned `Cellar/<formula>/<version>` path, so schedule entries survive Node upgrades.
+
 ## [0.4.0] - 2026-10-01
 
 ### Added
